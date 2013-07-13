@@ -17,3 +17,5 @@ target
 .settings
 tools
 *.iml
+*.swp
+/.ant-targets-build.xml

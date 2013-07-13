@@ -36,7 +36,7 @@
 
     <target name="compile" description="Compile production classes" depends="lib.retrieve">
         <mkdir dir="${main.target}"/>
-        <javac srcdir="${main.src}" destdir="${main.target}" classpathref="path.libs" source="1.6"/>
+        <javac srcdir="${main.src}" destdir="${main.target}" classpathref="path.libs" source="1.6" target="1.6"/>
 
         <tstamp>
             <format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -45,7 +45,7 @@
 
     <target name="compile.tests" description="Compile unit test classes" depends="compile">
         <mkdir dir="${test.target}"/>
-        <javac srcdir="${test.src}" destdir="${test.target}" classpathref="path.testing" debug="true" target="1.6"/>
+        <javac srcdir="${test.src}" destdir="${test.target}" classpathref="path.testing" debug="true" source="1.6" target="1.6"/>
     </target>
 
     <target name="test" depends="compile, compile.tests">
@@ -58,7 +58,7 @@
 
     <target name="compile.koans" description="Compile koans">
         <mkdir dir="${koan.target}"/>
-        <javac srcdir="${koan.src}" destdir="${koan.target}" classpathref="path.koan" debug="true" target="1.6"/>
+        <javac srcdir="${koan.src}" destdir="${koan.target}" classpathref="path.koan" debug="true" source="1.6" target="1.6"/>
     </target>
 
     <target name="run.koans"
