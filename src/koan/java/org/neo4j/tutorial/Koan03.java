@@ -46,7 +46,7 @@ public class Koan03
         Index<Node> characters = null;
 
         // YOUR CODE GOES HERE
-        
+        characters = universe.getDatabase().index().forNodes("characters");
 
         assertNotNull( characters );
         assertThat(
@@ -67,7 +67,14 @@ public class Koan03
                 .getSingle() );
 
         // YOUR CODE GOES HERE
-        
+        Transaction tx = db.beginTx();
+        try {
+            db.index().forNodes("characters")
+                .add(abigailPettigrew, "character", "Abigail Pettigrew");
+            tx.success();
+        } finally {
+            tx.finish();
+        }
 
         assertNotNull( db.index()
                 .forNodes( "characters" )
@@ -86,7 +93,7 @@ public class Koan03
         // Index name: 'species', index key: 'species'
         
         // YOUR CODE GOES HERE
-        
+        species = universe.getDatabase().index().forNodes("species").query("species", "S*n");
 
         assertThat( species, containsOnlySpecies( "Silurian", "Slitheen", "Sontaran", "Skarasen" ) );
     }
@@ -103,7 +110,14 @@ public class Koan03
         Node cyberleader = retriveCyberleaderFromIndex( db );
 
         // YOUR CODE GOES HERE
-        
+        Transaction tx = db.beginTx();
+        try {
+            for(Relationship rel : cyberleader.getRelationships()) rel.delete();
+            cyberleader.delete();
+            tx.success();
+        } finally {
+            tx.finish();
+        }
 
         assertNull( "Cyberleader has not been deleted from the characters index.", retriveCyberleaderFromIndex( db ) );
 
