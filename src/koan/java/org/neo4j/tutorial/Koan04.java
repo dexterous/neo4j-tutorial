@@ -46,7 +46,9 @@ public class Koan04
         AutoIndexer<Node> charactersAutoIndex = null;
 
         // YOUR CODE GOES HERE
-        
+        charactersAutoIndex = universe.getDatabase().index().getNodeAutoIndexer();
+        charactersAutoIndex.startAutoIndexingProperty("character-name");
+        charactersAutoIndex.setEnabled(true);
 
         Transaction tx = universe.getDatabase()
                 .beginTx();
