@@ -47,15 +47,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor = node:characters(character = 'Doctor') " +
-                "MATCH (doctor)<-[:COMPANION_OF]-(companion) " +
-                "WHERE has(companion.wikipedia) " +
-                "RETURN companion.wikipedia";
-
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
         Iterator<String> iterator = result.javaColumnAs( "companion.wikipedia" );
@@ -73,13 +65,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor = node:characters(character = 'Doctor')"
-                + "MATCH (doctor)<-[:PLAYED]-(actor) "
-                + "RETURN count(actor) AS numberOfActorsWhoPlayedTheDoctor";
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
         Long actorsCount = (Long) result.javaColumnAs( "numberOfActorsWhoPlayedTheDoctor" ).next();
@@ -94,13 +80,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor = node:characters(character = 'Doctor') " +
-                "MATCH (doctor)<-[:PLAYED]-()-[regen:REGENERATED_TO]->() " +
-                "RETURN min(regen.year) AS earliest, max(regen.year) AS latest";
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
 
@@ -117,13 +97,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START david=node:actors(actor = 'David Tennant'), freema=node:actors(actor = 'Freema Agyeman'), doctor=node:characters(character = 'Doctor'), martha=node:characters(character = 'Martha Jones') "
-                + "MATCH (freema)-[:PLAYED]->(martha)-[:APPEARED_IN]->(episode)<-[:APPEARED_IN]-(david)-[:PLAYED]->(doctor)"
-                + "RETURN min(episode.episode) AS earliest";
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
 
@@ -137,14 +111,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor = node:characters(character = 'Doctor')"
-                + "MATCH (doctor)<-[:PLAYED]-(actor)"
-                + "RETURN avg(actor.salary?) AS cash";
-
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
 
@@ -158,15 +125,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START davison=node:actors(actor='Peter Davison') "
-                + "MATCH (davison)-[:APPEARED_IN]->(episode)<-[:APPEARED_IN]-(enemy)-[:ENEMY_OF]->()<-[:PLAYED]-(davison)"
-                + "RETURN episode.episode, episode.title, collect(enemy.species?) AS species, collect(enemy.character?) AS characters "
-                + "ORDER BY episode.episode";
-
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
 
@@ -184,16 +143,7 @@ public class Koan08c
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START rose = node:characters(character = 'Rose Tyler'), doctor = node:characters(character = 'Doctor') "
-                + "MATCH rose-[:APPEARED_IN]->episode, "
-                + "(doctor)-[:ENEMY_OF]->(enemy)-[:APPEARED_IN]->(episode) "
-                + "WHERE has(enemy.species)  "
-                + "RETURN DISTINCT enemy.species AS enemySpecies";
-
-
-        // SNIPPET_END
+        
 
         ExecutionResult result = engine.execute( cql );
         Iterator<String> enemySpecies = result.javaColumnAs( "enemySpecies" );

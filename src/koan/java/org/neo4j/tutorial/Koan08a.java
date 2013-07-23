@@ -22,11 +22,7 @@ public class Koan08a
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE n";
-
-        // SNIPPET_END
+        
 
         engine.execute( cql );
 
@@ -43,11 +39,7 @@ public class Koan08a
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE n = { firstname : 'Tom', lastname : 'Baker' }";
-
-        // SNIPPET_END
+        
 
         engine.execute( cql );
 
@@ -65,12 +57,7 @@ public class Koan08a
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE doctor = { character : 'Doctor' }, master = { character : 'Master' }, " +
-                "(doctor)<-[r:ENEMY_OF]-(master) ";
-
-        // SNIPPET_END
+        
 
         engine.execute( cql );
 

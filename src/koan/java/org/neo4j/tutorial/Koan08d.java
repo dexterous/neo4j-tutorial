@@ -37,17 +37,7 @@ public class Koan08d
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor=node:characters(character='Doctor') " +
-                "MATCH doctor<-[r:COMPANION_OF]-companion " +
-                "WHERE has(companion.firstname) AND companion.firstname='James' " +
-                "AND has(companion.initial) AND companion.initial='T' " +
-                "AND has(companion.lastname) AND companion.lastname='Kirk' " +
-                "DELETE r, companion";
-
-
-        // SNIPPET_END
+        
 
         engine.execute( cql );
 
@@ -64,13 +54,7 @@ public class Koan08d
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "START doctor=node:characters(character='Doctor') " +
-                "MATCH doctor<-[:PLAYED]-actor " +
-                "DELETE actor.salary";
-
-        // SNIPPET_END
+        
 
         engine.execute( cql );
 
