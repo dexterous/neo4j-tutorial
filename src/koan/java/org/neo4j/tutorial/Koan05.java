@@ -1,5 +1,7 @@
 package org.neo4j.tutorial;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.neo4j.tutorial.matchers.ContainsOnlyHumanCompanions.containsOnlyHumanCompanions;
@@ -47,7 +49,13 @@ public class Koan05
         int numberOfRegenerations = 1;
 
         // YOUR CODE GOES HERE
-        
+        Node doctor = actorsIndex.get("actor", "William Hartnell").getSingle();
+        while(doctor.hasRelationship(DoctorWhoRelationships.REGENERATED_TO, Direction.OUTGOING)) {
+            numberOfRegenerations++;
+            doctor = doctor
+                        .getSingleRelationship(DoctorWhoRelationships.REGENERATED_TO, Direction.OUTGOING)
+                        .getOtherNode(doctor);
+        }
 
         assertEquals( 11, numberOfRegenerations );
     }
@@ -58,7 +66,26 @@ public class Koan05
         HashSet<Node> humanCompanions = new HashSet<Node>();
 
         // YOUR CODE GOES HERE
-        
+        Node theDoctor = universe.getDatabase()
+                .index()
+                .forNodes( "characters" )
+                .get( "character", "Doctor" )
+                .getSingle();
+
+        Node humanSpecies = universe.getDatabase()
+                .index()
+                .forNodes( "species" )
+                .get( "species", "Human" )
+                .getSingle();
+
+        for(Relationship rel : theDoctor.getRelationships(DoctorWhoRelationships.COMPANION_OF, Direction.INCOMING)) {
+            Node companion = rel.getOtherNode(theDoctor);
+            for(Relationship speciesRel : companion.getRelationships(DoctorWhoRelationships.IS_A, Direction.OUTGOING)) {
+                if(speciesRel.getOtherNode(companion).equals(humanSpecies)) {
+                    humanCompanions.add(companion);
+                }
+            }
+        }
 
         int numberOfKnownHumanCompanions = 40;
         assertEquals( numberOfKnownHumanCompanions, humanCompanions.size() );
@@ -77,7 +104,17 @@ public class Koan05
         HashSet<Node> episodesWhereRoseFightsTheDaleks = new HashSet<Node>();
 
         // YOUR CODE GOES HERE
-        
+        Node roseTyler = friendliesIndex.get("character", "Rose Tyler").getSingle();
+        Node dalek = speciesIndex.get("species", "Dalek").getSingle();
+
+        for(Relationship rel : roseTyler.getRelationships(DoctorWhoRelationships.APPEARED_IN)) {
+            Node episode = rel.getEndNode();
+            for(Relationship enemieRel : episode.getRelationships(DoctorWhoRelationships.APPEARED_IN)) {
+                if(enemieRel.getStartNode().equals(dalek)) {
+                    episodesWhereRoseFightsTheDaleks.add(episode);
+                }
+            }
+        }
 
         assertThat(
                 episodesWhereRoseFightsTheDaleks,
